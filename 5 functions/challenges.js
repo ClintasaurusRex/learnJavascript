@@ -160,3 +160,166 @@ function calculateDamage(attackPower, weaponDamage) {
 
 totalDamage = calculateDamage(200, 35);
 console.log(`Total damage: ${totalDamage}`);
+console.log("=".repeat(50));
+/*
+==================================================
+LESSON 5 — CHALLENGE 4: HEALTH STATUS FUNCTION
+==================================================
+
+Create a function named getHealthStatus.
+
+The function should accept one parameter:
+
+- health
+
+Use if, else if, and else inside the function.
+
+RULES:
+
+If health is greater than or equal to 75, return:
+
+"Healthy"
+
+If health is greater than or equal to 25, return:
+
+"Injured"
+
+If health is greater than 0, return:
+
+"Critical"
+
+Otherwise, return:
+
+"Dead"
+
+Call the function with these values:
+
+getHealthStatus(100)
+getHealthStatus(50)
+getHealthStatus(10)
+getHealthStatus(0)
+
+Store each returned value in a separate variable.
+
+Print the results using console.log().
+
+EXPECTED OUTPUT:
+
+Healthy
+Injured
+Critical
+Dead
+
+REQUIREMENTS:
+
+1. Create a function named getHealthStatus.
+2. Give it one parameter named health.
+3. Use if, else if, and else.
+4. Return a string from each branch.
+5. Do not use console.log() inside the function.
+6. Store each returned result in a variable.
+7. Print the variables after calling the function.
+
+REMEMBER:
+
+return sends a value out of the function.
+
+==================================================
+*/
+
+// Write your code below
+function getHealthStatus(health) {
+  if (health >= 75) {
+    return "Healthy";
+  } else if (health >= 25) {
+    return "Injured";
+  } else if (health > 0) {
+    return "Critical";
+  } else {
+    return "Dead";
+  }
+}
+const fullHealth = getHealthStatus(100);
+const halfHeath = getHealthStatus(50);
+const lowHealth = getHealthStatus(10);
+const dead = getHealthStatus(0);
+
+console.log(fullHealth);
+console.log(halfHeath);
+console.log(lowHealth);
+console.log(dead);
+console.log("=".repeat(50));
+
+/*
+==================================================
+LESSON 5 — CHALLENGE 5: BATTLE SUMMARY
+==================================================
+
+You already know how to create a function that
+calculates damage.
+
+Create this function:
+
+calculateDamage(attackPower, weaponDamage)
+
+It should add the two values and return the result.
+
+Then create another function named:
+
+createBattleSummary
+
+It should accept three parameters:
+
+- playerName
+- attackPower
+- weaponDamage
+
+Inside createBattleSummary:
+
+1. Call calculateDamage using attackPower and
+   weaponDamage.
+2. Store the returned value in a variable named
+   totalDamage.
+3. Return this message:
+
+Clint dealt 35 damage.
+
+Call createBattleSummary with:
+
+createBattleSummary("Clint", 20, 15)
+
+Store the returned message in a variable named:
+
+battleSummary
+
+Print battleSummary.
+
+EXPECTED OUTPUT:
+
+Clint dealt 35 damage.
+
+REQUIREMENTS:
+
+1. Create both functions.
+2. calculateDamage must return a number.
+3. createBattleSummary must call calculateDamage.
+4. createBattleSummary must return a string.
+5. Do not repeat the addition inside
+   createBattleSummary.
+6. Use a template literal.
+7. Print the final result outside both functions.
+
+BONUS:
+
+Call createBattleSummary again with:
+
+createBattleSummary("Joel", 100, 25)
+
+Expected:
+
+Joel dealt 125 damage.
+
+==================================================
+*/
+
+// Write your code below
