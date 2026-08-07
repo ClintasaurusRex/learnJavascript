@@ -323,3 +323,14 @@ Joel dealt 125 damage.
 */
 
 // Write your code below
+
+function calculateDamage(attackPower, weaponDamage) {
+  return attackPower + weaponDamage;
+}
+
+function createBattleSummary(playerName, attackPower, weaponDamage) {
+  return `${playerName} dealt ${totalDamage} damage.`;
+}
+
+const result = createBattleSummary("Clint", 20, 15);
+console.log(result);
