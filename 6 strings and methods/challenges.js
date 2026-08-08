@@ -1,6 +1,4 @@
-function spacer() {
-  console.log("=".repeat(50));
-}
+import { spacer } from "../util.js";
 /*
 ==================================================
 LESSON 6 — CHALLENGE 1: INSPECT A WORD
