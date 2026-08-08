@@ -238,3 +238,125 @@ for (let i = 0; i < healthValues.length; i++) {
 }
 const avgHealth = totalHealth / healthValues.length;
 console.log(avgHealth);
+spacer();
+
+/*
+==================================================
+LESSON 7 — CHALLENGE 6: HIGHEST HEALTH
+==================================================
+
+Use this array:
+
+const healthValues = [100, 80, 65, 90];
+
+Create a variable named highestHealth.
+
+Start it with the first value in the array:
+
+healthValues[0]
+
+Loop through the array.
+
+If the current health value is greater than
+highestHealth, update highestHealth.
+
+After the loop, print:
+
+Highest health: 100
+
+REQUIREMENTS:
+
+1. Reuse your existing healthValues array.
+2. Use let for highestHealth because it may change.
+3. Start highestHealth with healthValues[0].
+4. Use a for loop.
+5. Use an if statement inside the loop.
+6. Compare healthValues[i] with highestHealth.
+7. Update highestHealth when a larger number is found.
+8. Print the result after the loop.
+
+IMPORTANT:
+
+Do not start highestHealth at 100.
+
+Your code should work even if the array values change.
+
+==================================================
+*/
+
+// Write your code below
+
+let highestHealth = healthValues[0];
+
+for (let i = 0; i < healthValues.length; i++) {
+  if (healthValues[i] > highestHealth) {
+    highestHealth = healthValues[i];
+  }
+}
+
+console.log(`Highest health: ${highestHealth}`);
+spacer();
+/*
+==================================================
+LESSON 7 — CHALLENGE 7: FIND A PLAYER
+==================================================
+
+Use your existing party array.
+
+Create a variable:
+
+const playerToFind = "Ellie";
+
+Create another variable:
+
+let playerFound = false;
+
+Loop through the party array.
+
+If party[i] exactly matches playerToFind:
+
+1. Set playerFound to true.
+2. Print:
+
+Ellie was found.
+
+After the loop, if playerFound is still false, print:
+
+Ellie was not found.
+
+REQUIREMENTS:
+
+1. Reuse the existing party array.
+2. Use const for playerToFind.
+3. Use let for playerFound.
+4. Start playerFound as false.
+5. Use a for loop.
+6. Use === to compare the names.
+7. Change playerFound to true when a match is found.
+
+TEST AGAIN:
+
+Change playerToFind to:
+
+"Kratos"
+
+Since Kratos was removed earlier, expected output:
+
+Kratos was not found.
+
+==================================================
+*/
+
+// Write your code below
+
+const playerToFind = "Kratos";
+let playerFound = false;
+
+for (let i = 0; i < party.length; i++) {
+  if (party[i] === playerToFind) {
+    playerFound = true;
+  }
+}
+console.log(
+  playerFound ? `${playerToFind} was found.` : `${playerToFind} was not found.`,
+);
