@@ -461,3 +461,4 @@ for (let i = 0; i < character.inventory.length; i++) {
   const currentItem = character.inventory[i];
   console.log(`Item ${i + 1}: ${currentItem}`);
 }
+console.log(character.inventory);
