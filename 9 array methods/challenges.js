@@ -270,8 +270,56 @@ Geralt is not in the party.
 */
 
 // Write your code below
-
 const hasGeralt = party.includes("Geralt");
-console.log(
-  hasGeralt ? "Geralt is in the party." : "Geralt is not in the party.",
+const hasKratos = party.includes("Kratos");
+console.log(`Has Geralt: ${hasGeralt}`);
+console.log(`Has Kratos: ${hasKratos}`);
+spacer();
+/*
+==================================================
+LESSON 9 — CHALLENGE 6: REDUCE TOTAL HEALTH
+==================================================
+
+Create this array:
+
+const healthValues = [100, 80, 65, 90];
+
+Use .reduce() to calculate the total health.
+
+Store the result in:
+
+totalHealth
+
+EXPECTED RESULT:
+
+335
+
+Print:
+
+Total health: 335
+
+REQUIREMENTS:
+
+1. Use const for healthValues.
+2. Use .reduce().
+3. Do not use a for loop.
+4. Name the first parameter accumulator.
+5. Name the second parameter health.
+6. Return accumulator + health.
+7. Start the accumulator at 0.
+8. Store the result in totalHealth.
+9. Use a template literal for the output.
+
+STARTING SHAPE:
+
+const totalHealth = healthValues.reduce(
+  function (accumulator, health) {
+    return accumulator + health;
+  },
+  0,
 );
+
+==================================================
+*/
+
+// Write your code below
