@@ -323,3 +323,89 @@ const totalHealth = healthValues.reduce(
 */
 
 // Write your code below
+const healthValues = [100, 80, 65, 90];
+
+const totalHealth = healthValues.reduce(function (accumulator, health) {
+  return accumulator + health;
+}, 0);
+console.log(`Total health: ${totalHealth}`);
+spacer();
+/*
+==================================================
+LESSON 9 — FINAL CHALLENGE: PLAYER SCORES
+==================================================
+
+Create this array:
+
+const scores = [45, 80, 72, 30, 95, 60];
+
+STEP 1:
+
+Use .filter() to create a new array named:
+
+passingScores
+
+Only keep scores greater than or equal to 60.
+
+Expected:
+
+[80, 72, 95, 60]
+
+STEP 2:
+
+Use .map() on passingScores to create:
+
+bonusScores
+
+Add 5 points to every score.
+
+Expected:
+
+[85, 77, 100, 65]
+
+STEP 3:
+
+Use .reduce() on bonusScores to calculate:
+
+totalScore
+
+Expected:
+
+327
+
+Print:
+
+Passing scores: ...
+Bonus scores: ...
+Total score: 327
+
+REQUIREMENTS:
+
+1. Do not use a for loop.
+2. Use .filter().
+3. Use .map().
+4. Use .reduce().
+5. Store the result of each step in a variable.
+6. Start reduce at 0.
+
+==================================================
+*/
+
+// Write your code below\
+const scores = [45, 80, 72, 30, 95, 60];
+
+const passingScores = scores.filter(function (score) {
+  return score >= 60;
+});
+
+const bonusScores = passingScores.map(function (passScore) {
+  return passScore + 5;
+});
+
+const totalScore = bonusScores.reduce(function (accumulator, score) {
+  return accumulator + score;
+}, 0);
+
+console.log(`Passing scores: ${passingScores}`);
+console.log(`Bonus scores: ${bonusScores}`);
+console.log(`Total score: ${totalScore}`);
