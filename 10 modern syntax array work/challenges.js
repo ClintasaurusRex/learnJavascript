@@ -251,3 +251,161 @@ const totalScore = scores
 */
 
 // Write your code below
+
+const scores2 = [40, 75, 90, 55, 100, 65];
+
+const totalScore = scores2
+  .filter((score) => score >= 60)
+  .map((score) => score + 10)
+  .reduce((accumulator, score) => accumulator + score, 0);
+console.log(totalScore);
+spacer();
+
+/*
+==================================================
+LESSON 10 — CHALLENGE 6: PLAYER LEVELS
+==================================================
+
+Create this array:
+
+const players = [
+  { name: "Clint", level: 10 },
+  { name: "Arthur", level: 25 },
+  { name: "Ellie", level: 18 },
+  { name: "Geralt", level: 30 },
+  { name: "Joel", level: 12 },
+];
+
+In ONE chained expression:
+
+1. Keep only players whose level is >= 18.
+
+2. Use .map() to turn those player objects into
+   strings containing only their names.
+
+Store the result in:
+
+highLevelPlayers
+
+EXPECTED RESULT:
+
+["Arthur", "Ellie", "Geralt"]
+
+REQUIREMENTS:
+
+1. Use .filter().
+2. Use .map().
+3. Chain the methods.
+4. Use arrow functions.
+5. Use short-return syntax.
+6. Access object properties using dot notation.
+7. Do not use a for loop.
+8. Do not create an intermediate filtered array.
+
+STARTING SHAPE:
+
+const highLevelPlayers = players
+  .filter((player) => ...)
+  .map((player) => ...);
+
+Print highLevelPlayers.
+
+==================================================
+*/
+
+// Write your code below
+
+const players = [
+  { name: "Clint", level: 10 },
+  { name: "Arthur", level: 25 },
+  { name: "Ellie", level: 18 },
+  { name: "Geralt", level: 30 },
+  { name: "Joel", level: 12 },
+];
+
+const highLevelPlayers = players
+  .filter((player) => player.level >= 18)
+  .map((player) => player.name);
+
+console.log(highLevelPlayers);
+spacer();
+/*
+==================================================
+LESSON 10 — FINAL CHALLENGE: PARTY POWER
+==================================================
+
+Create this array:
+
+const partyMembers = [
+  { name: "Clint", level: 10, power: 40 },
+  { name: "Arthur", level: 25, power: 80 },
+  { name: "Ellie", level: 18, power: 65 },
+  { name: "Geralt", level: 30, power: 100 },
+  { name: "Joel", level: 12, power: 55 },
+];
+
+In ONE chained expression:
+
+1. Keep only characters whose level is >= 15.
+
+2. Use .map() to get only their power values.
+
+3. Use .reduce() to add all of those power values
+   together.
+
+Store the final result in:
+
+totalPartyPower
+
+EXPECTED FLOW:
+
+Arthur → 80
+Ellie  → 65
+Geralt → 100
+
+Final total:
+
+245
+
+Print:
+
+Total party power: 245
+
+REQUIREMENTS:
+
+1. Use .filter().
+2. Use .map().
+3. Use .reduce().
+4. Chain all three methods.
+5. Use arrow functions.
+6. Use short-return syntax.
+7. Give .reduce() an initial value of 0.
+8. Do not create intermediate arrays.
+9. Do not use a for loop.
+
+STARTING SHAPE:
+
+const totalPartyPower = partyMembers
+  .filter((player) => ...)
+  .map((player) => ...)
+  .reduce((accumulator, power) => ..., 0);
+
+==================================================
+*/
+
+// Write your code below
+
+const partyMembers = [
+  { name: "Clint", level: 10, power: 40 },
+  { name: "Arthur", level: 25, power: 80 },
+  { name: "Ellie", level: 18, power: 65 },
+  { name: "Geralt", level: 30, power: 100 },
+  { name: "Joel", level: 12, power: 55 },
+];
+
+const totalPartyPower = partyMembers
+  .filter((player) => player.level >= 15)
+  .map((player) => player.power)
+  .reduce((accumulator, power) => accumulator + power);
+
+console.log(totalPartyPower);

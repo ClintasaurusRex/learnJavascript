@@ -1,533 +1,311 @@
-# Lesson 9 Notes — Array Methods
+# Lesson 10 Notes — Arrow Functions and Chaining
 
-## Key Idea
+## Arrow Function Cheat Sheet
 
-Array methods perform common operations without manually writing a `for` loop every time.
-
-The main methods covered were:
-
-```text
-.forEach()
-.map()
-.filter()
-.find()
-.includes()
-.reduce()
-```
-
----
-
-# Quick Comparison
-
-| Method        | Main Job                    | Returns                 |
-| ------------- | --------------------------- | ----------------------- |
-| `.forEach()`  | Do something for every item | Usually nothing useful  |
-| `.map()`      | Transform every item        | New array               |
-| `.filter()`   | Keep matching items         | New array               |
-| `.find()`     | Find first match            | One item or `undefined` |
-| `.includes()` | Check whether value exists  | Boolean                 |
-| `.reduce()`   | Combine items               | One final value         |
-
----
-
-# `.forEach()`
-
-Basic pattern:
+Traditional function:
 
 ```js
-array.forEach(function (item) {
-  // Do something with item
-});
-```
-
-Example:
-
-```js
-const party = ["Clint", "Arthur", "Ellie"];
-
-party.forEach(function (player) {
-  console.log(`Player: ${player}`);
-});
-```
-
-Use `.forEach()` when you want to perform an action for every item.
-
----
-
-# `.forEach()` Versus `for`
-
-Traditional loop:
-
-```js
-for (let i = 0; i < party.length; i++) {
-  console.log(party[i]);
+function add(a, b) {
+  return a + b;
 }
 ```
 
-`.forEach()`:
+Function expression:
 
 ```js
-party.forEach(function (player) {
-  console.log(player);
-});
+const add = function (a, b) {
+  return a + b;
+};
 ```
 
-The current item is handed directly to the callback.
-
----
-
-# Callback Function
-
-This part:
+Arrow function:
 
 ```js
-function (player) {
-  console.log(player);
-}
+const add = (a, b) => {
+  return a + b;
+};
 ```
 
-is a function passed into another function.
-
-This is commonly called a **callback function**.
-
-The array method calls that function for you.
-
----
-
-# `.map()`
-
-Pattern:
+Short arrow function:
 
 ```js
-const newArray = array.map(function (item) {
-  return changedItem;
-});
-```
-
-Example:
-
-```js
-const levels = [5, 10, 15, 20];
-
-const doubledLevels = levels.map(function (level) {
-  return level * 2;
-});
-```
-
-Result:
-
-```js
-[10, 20, 30, 40];
+const add = (a, b) => a + b;
 ```
 
 ---
 
-# `.map()` Rule
+# Short Return Rule
 
-Think:
-
-```text
-One item in
-One transformed item out
-```
-
-Example:
-
-```text
-5  → 10
-10 → 20
-15 → 30
-20 → 40
-```
-
-The new array normally has the same number of items as the original.
-
----
-
-# `.map()` Does Not Change the Original
+This:
 
 ```js
-const numbers = [1, 2, 3];
-
-const doubled = numbers.map(function (number) {
+(number) => {
   return number * 2;
-});
+};
 ```
 
-Results:
+can become:
 
-```text
-numbers → [1, 2, 3]
-doubled → [2, 4, 6]
+```js
+(number) => number * 2;
 ```
+
+when there is only one returned expression.
 
 ---
 
-# Forgetting `return` in `.map()`
+# Braces Mean You Need `return`
+
+Correct:
+
+```js
+(number) => {
+  return number * 2;
+};
+```
 
 Incorrect:
 
 ```js
-const doubled = numbers.map(function (number) {
+(number) => {
   number * 2;
-});
+};
 ```
 
-This produces values of:
+The incorrect version returns:
 
 ```text
 undefined
 ```
 
-Correct:
+Short version:
 
 ```js
-const doubled = numbers.map(function (number) {
-  return number * 2;
-});
+(number) => number * 2;
+```
+
+---
+
+# `.map()`
+
+Use `.map()` when you want to **transform every item**.
+
+```js
+const doubled = numbers.map((number) => number * 2);
+```
+
+Mental model:
+
+```text
+One item in → One changed item out
 ```
 
 ---
 
 # `.filter()`
 
-Pattern:
+Use `.filter()` when you want to **keep only certain items**.
 
 ```js
-const filteredArray = array.filter(function (item) {
-  return condition;
-});
+const passingScores = scores.filter((score) => score >= 60);
 ```
 
-Example:
-
-```js
-const levels = [5, 10, 15, 20, 25, 30];
-
-const highLevels = levels.filter(function (level) {
-  return level >= 20;
-});
-```
-
-Result:
-
-```js
-[20, 25, 30];
-```
-
----
-
-# `.filter()` Rule
-
-Think:
+Mental model:
 
 ```text
-true  → keep item
-false → remove item
-```
-
-Example:
-
-```js
-return level >= 20;
-```
-
----
-
-# `.find()`
-
-Pattern:
-
-```js
-const result = array.find(function (item) {
-  return condition;
-});
-```
-
-Example:
-
-```js
-const party = ["Clint", "Arthur", "Ellie"];
-
-const foundPlayer = party.find(function (player) {
-  return player === "Ellie";
-});
-```
-
-Result:
-
-```text
-Ellie
-```
-
----
-
-# `.find()` Only Returns the First Match
-
-```js
-const numbers = [5, 10, 15, 20];
-
-const result = numbers.find(function (number) {
-  return number > 10;
-});
-```
-
-Result:
-
-```text
-15
-```
-
-It stops when the first match is found.
-
----
-
-# `.find()` Can Return `undefined`
-
-```js
-const foundPlayer = party.find(function (player) {
-  return player === "Kratos";
-});
-```
-
-If Kratos does not exist:
-
-```text
-undefined
-```
-
-This means:
-
-```text
-No matching item was found.
-```
-
----
-
-# Case-Insensitive `.find()`
-
-```js
-const foundPlayer = party.find(function (player) {
-  return player.toLowerCase() === "ELLIE".toLowerCase();
-});
-```
-
-This makes capitalization irrelevant.
-
----
-
-# `.includes()`
-
-Pattern:
-
-```js
-array.includes(value);
-```
-
-Example:
-
-```js
-const hasGeralt = party.includes("Geralt");
-```
-
-Result:
-
-```js
-true;
-```
-
-Another example:
-
-```js
-const hasKratos = party.includes("Kratos");
-```
-
-Result:
-
-```js
-false;
-```
-
----
-
-# `.find()` Versus `.includes()`
-
-Use:
-
-```js
-.find()
-```
-
-when you want:
-
-```text
-the actual matching item
-```
-
-Use:
-
-```js
-.includes()
-```
-
-when you want:
-
-```text
-true or false
+true  → keep it
+false → remove it
 ```
 
 ---
 
 # `.reduce()`
 
-Pattern:
+Use `.reduce()` when you want **one final value**.
 
 ```js
-const result = array.reduce(function (accumulator, item) {
-  return accumulator + item;
-}, startingValue);
+const total = numbers.reduce((accumulator, number) => accumulator + number, 0);
 ```
 
-Example:
-
-```js
-const healthValues = [100, 80, 65, 90];
-
-const totalHealth = healthValues.reduce(function (accumulator, health) {
-  return accumulator + health;
-}, 0);
-```
-
-Result:
-
-```text
-335
-```
-
----
-
-# Accumulator Mental Model
-
-```text
 The accumulator remembers the result so far.
+
+---
+
+# `.reduce()` Initial Value
+
+Prefer:
+
+```js
+.reduce((accumulator, value) => accumulator + value, 0);
 ```
 
-Example:
+The `0`:
+
+- Gives the accumulator a clear starting value
+- Handles empty arrays safely
+- Makes the code easier to understand
+
+---
+
+# Method Chaining
+
+```js
+const result = array.filter((item) => condition).map((item) => transformation);
+```
+
+Each method works on the result of the previous method.
+
+---
+
+# Full Chain Pattern
+
+```js
+const result = array
+  .filter((item) => condition)
+  .map((item) => transformation)
+  .reduce((accumulator, item) => accumulator + item, 0);
+```
+
+Remember:
 
 ```text
-Start: 0
-
-0 + 100 = 100
-100 + 80 = 180
-180 + 65 = 245
-245 + 90 = 335
+Filter → Keep
+Map    → Change
+Reduce → Combine
 ```
 
 ---
 
-# Initial Value
-
-This:
+# Arrays of Objects
 
 ```js
-}, 0);
+const players = [
+  { name: "Arthur", level: 25 },
+  { name: "Ellie", level: 18 },
+];
 ```
 
-means:
+Inside the callback:
 
-```text
-Start accumulator at zero.
+```js
+(player) => player.level;
 ```
 
-For numeric totals, this is usually what you want.
+gets the level.
+
+```js
+(player) => player.name;
+```
+
+gets the name.
 
 ---
 
-# Empty Arrays and `.reduce()`
-
-Without an initial value:
+# Filter Objects
 
 ```js
-[].reduce(function (accumulator, number) {
-  return accumulator + number;
-});
+const highLevelPlayers = players.filter((player) => player.level >= 18);
 ```
 
-JavaScript throws an error.
+---
 
-With an initial value:
+# Map Objects
 
 ```js
-[].reduce(function (accumulator, number) {
-  return accumulator + number;
-}, 0);
+const playerNames = players.map((player) => player.name);
 ```
 
 Result:
 
-```text
-0
+```js
+["Arthur", "Ellie"];
 ```
 
 ---
 
-# Array Method Pipeline
-
-Methods can process data in stages.
+# Filter Then Map
 
 ```js
-const scores = [45, 80, 72, 30, 95, 60];
-
-const passingScores = scores.filter(function (score) {
-  return score >= 60;
-});
-
-const bonusScores = passingScores.map(function (score) {
-  return score + 5;
-});
-
-const totalScore = bonusScores.reduce(function (accumulator, score) {
-  return accumulator + score;
-}, 0);
+const highLevelPlayers = players
+  .filter((player) => player.level >= 18)
+  .map((player) => player.name);
 ```
 
-Flow:
+Read it as:
 
 ```text
-Original
-↓
-Filter
-↓
-Map
-↓
-Reduce
-↓
-Final value
+Keep high-level players.
+Then take their names.
 ```
 
 ---
 
-# Choosing the Correct Method
-
-Ask yourself what you want.
-
-## "Do something with every item"
-
-Use:
+# Filter → Map → Reduce
 
 ```js
-.forEach()
+const totalPower = players
+  .filter((player) => player.level >= 15)
+  .map((player) => player.power)
+  .reduce((accumulator, power) => accumulator + power, 0);
 ```
 
-## "Change every item"
+Read it as:
 
-Use:
+```text
+Keep players level 15 or higher.
+
+Take their power values.
+
+Add all the power values together.
+```
+
+---
+
+# Common Mistakes
+
+## Forgetting `return`
+
+Incorrect:
 
 ```js
-.map()
+numbers.map((number) => {
+  number * 2;
+});
 ```
 
-## "Keep only some items"
+Correct:
+
+```js
+numbers.map((number) => {
+  return number * 2;
+});
+```
+
+Or:
+
+```js
+numbers.map((number) => number * 2);
+```
+
+---
+
+## Forgetting `.reduce()`'s Initial Value
+
+Less ideal:
+
+```js
+numbers.reduce((accumulator, number) => accumulator + number);
+```
+
+Preferred:
+
+```js
+numbers.reduce((accumulator, number) => accumulator + number, 0);
+```
+
+---
+
+## Mixing Up `.map()` and `.filter()`
 
 Use:
 
@@ -535,25 +313,51 @@ Use:
 .filter()
 ```
 
-## "Find one matching item"
+when you want **fewer items**.
 
 Use:
+
+```js
+.map()
+```
+
+when you want **changed items**.
+
+---
+
+# Method Selection Cheat Sheet
+
+### Do something with every item
+
+```js
+.forEach()
+```
+
+### Transform every item
+
+```js
+.map()
+```
+
+### Keep only some items
+
+```js
+.filter()
+```
+
+### Find the first match
 
 ```js
 .find()
 ```
 
-## "Does this exact value exist?"
-
-Use:
+### Check whether an exact value exists
 
 ```js
 .includes()
 ```
 
-## "Turn the entire array into one result"
-
-Use:
+### Produce one final value
 
 ```js
 .reduce()
@@ -561,231 +365,62 @@ Use:
 
 ---
 
-# Common Mistakes
-
-## Using `.forEach()` When You Need a New Array
-
-Instead of trying to transform with:
+# Quick Reference
 
 ```js
-.forEach()
+// Arrow function
+const multiply = (a, b) => a * b;
+
+// Map
+const doubled = numbers.map((number) => number * 2);
+
+// Filter
+const passing = scores.filter((score) => score >= 60);
+
+// Reduce
+const total = numbers.reduce((accumulator, number) => accumulator + number, 0);
+
+// Chain
+const result = numbers
+  .filter((number) => number >= 10)
+  .map((number) => number * 2)
+  .reduce((total, number) => total + number, 0);
+
+// Objects
+const names = players
+  .filter((player) => player.level >= 18)
+  .map((player) => player.name);
 ```
-
-use:
-
-```js
-.map()
-```
-
-when the goal is a new transformed array.
-
----
-
-## Forgetting `return`
-
-Incorrect:
-
-```js
-const highScores = scores.filter(function (score) {
-  score >= 60;
-});
-```
-
-Correct:
-
-```js
-const highScores = scores.filter(function (score) {
-  return score >= 60;
-});
-```
-
----
-
-## Expecting `.find()` to Return an Array
-
-`.find()`:
-
-```js
-15;
-```
-
-`.filter()`:
-
-```js
-[15, 20];
-```
-
-They solve different problems.
-
----
-
-## Forgetting `.find()` Can Return `undefined`
-
-Always remember:
-
-```text
-Match found    → item
-No match found → undefined
-```
-
----
-
-## Expecting `.includes()` to Return the Item
-
-This:
-
-```js
-party.includes("Geralt");
-```
-
-returns:
-
-```js
-true;
-```
-
-not:
-
-```text
-Geralt
-```
-
----
-
-## Forgetting the Initial `.reduce()` Value
-
-Preferred:
-
-```js
-const total = numbers.reduce(function (accumulator, number) {
-  return accumulator + number;
-}, 0);
-```
-
-The `0` gives the accumulator a clear starting value.
-
----
-
-# Problem-Solving Checklist
-
-Before choosing an array method:
-
-1. Do I want to perform an action for every item?
-   - `.forEach()`
-
-2. Do I want a changed version of every item?
-   - `.map()`
-
-3. Do I want only some items?
-   - `.filter()`
-
-4. Do I want the first matching item?
-   - `.find()`
-
-5. Do I only need true or false for an exact value?
-   - `.includes()`
-
-6. Do I want one final result?
-   - `.reduce()`
-
-Then:
-
-7. Decide what the current item parameter should be named.
-8. Decide what the callback needs to return.
-9. Store new arrays in new variables.
-10. Check whether the original array should remain unchanged.
 
 ---
 
 # Completed Skills
 
-- [x] I can use `.forEach()`.
-- [x] I understand callback parameters.
-- [x] I can use `.map()`.
-- [x] I understand that `.map()` returns a new array.
-- [x] I can use `.filter()`.
-- [x] I understand that `.filter()` keeps items when the condition is true.
-- [x] I can use `.find()`.
-- [x] I understand that `.find()` returns one item.
-- [x] I know `.find()` can return `undefined`.
-- [x] I can use `.includes()`.
-- [x] I understand that `.includes()` returns a boolean.
-- [x] I can use `.reduce()`.
-- [x] I understand the accumulator.
-- [x] I can provide an initial `.reduce()` value.
-- [x] I can combine `.filter()`, `.map()`, and `.reduce()`.
-
----
-
-# Quick Reference
-
-```js
-const numbers = [5, 10, 15, 20];
-
-// forEach
-numbers.forEach(function (number) {
-  console.log(number);
-});
-
-// map
-const doubled = numbers.map(function (number) {
-  return number * 2;
-});
-
-// filter
-const largeNumbers = numbers.filter(function (number) {
-  return number >= 15;
-});
-
-// find
-const foundNumber = numbers.find(function (number) {
-  return number > 10;
-});
-
-// includes
-const hasTen = numbers.includes(10);
-
-// reduce
-const total = numbers.reduce(function (accumulator, number) {
-  return accumulator + number;
-}, 0);
-```
-
----
-
-# Final Solution
-
-```js
-const scores = [45, 80, 72, 30, 95, 60];
-
-const passingScores = scores.filter(function (score) {
-  return score >= 60;
-});
-
-const bonusScores = passingScores.map(function (score) {
-  return score + 5;
-});
-
-const totalScore = bonusScores.reduce(function (accumulator, score) {
-  return accumulator + score;
-}, 0);
-
-console.log("Passing scores:", passingScores);
-console.log("Bonus scores:", bonusScores);
-console.log(`Total score: ${totalScore}`);
-```
+- [x] I can write an arrow function.
+- [x] I understand function expressions.
+- [x] I can use short-return syntax.
+- [x] I can use arrow functions with `.map()`.
+- [x] I can use arrow functions with `.filter()`.
+- [x] I can use arrow functions with `.reduce()`.
+- [x] I can chain array methods.
+- [x] I can filter arrays of objects.
+- [x] I can map object properties.
+- [x] I can build `filter → map → reduce` pipelines.
+- [x] I understand why `.reduce()` should usually have an initial value.
 
 ---
 
 # Next Lesson
 
-**Lesson 10: More Modern Function Syntax and Array Work**
+**Lesson 11 — Destructuring, Spread, and Rest**
 
 Topics:
 
-- Arrow functions
-- Converting normal functions to arrow functions
-- Short arrow-function returns
-- Using arrow functions with array methods
-- Chaining array methods
-- Cleaner intermediate JavaScript patterns
+- Array destructuring
+- Object destructuring
+- Spread operator `...`
+- Copying arrays
+- Combining arrays
+- Copying objects
+- Updating objects without changing the original
+- Rest parameters
