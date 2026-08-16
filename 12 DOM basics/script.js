@@ -125,9 +125,15 @@ console.log(status.classList);
 
 // Add event Listener
 const wakeButton = document.querySelector("#wakeButton");
+
 wakeButton.addEventListener("click", () => {
-  status.classList.add("awake");
-  status.textContent = "Dragon is awake";
+  status.classList.toggle("awake");
+
+  if (status.classList.contains("awake")) {
+    status.textContent = "Dragon is awake";
+  } else {
+    status.textContent = "Dragon is sleeping";
+  }
 });
 
 // Click to make changes to the page
