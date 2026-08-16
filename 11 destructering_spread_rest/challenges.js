@@ -498,3 +498,63 @@ const inventory = ["Sword", "Bow", "Potion", "Shield", "Torch"];
 const [primaryItem, ...remainingItems] = inventory;
 console.log(primaryItem);
 console.log(remainingItems);
+spacer();
+/*
+==================================================
+LESSON 11 — CHALLENGE 11: REST WITH FUNCTION ARGS
+==================================================
+
+Create an arrow function called:
+
+showParty
+
+It should accept:
+
+leader
+
+followed by ANY number of additional party members.
+
+Use:
+
+leader
+...members
+
+Inside the function, print:
+
+Leader: Clint
+
+Then print the members array.
+
+Call:
+
+showParty("Clint", "Arthur", "Ellie", "Geralt");
+
+EXPECTED RESULT:
+
+Leader: Clint
+["Arthur", "Ellie", "Geralt"]
+
+REQUIREMENTS:
+
+1. Use an arrow function.
+2. Use a normal first parameter called leader.
+3. Use a rest parameter called members.
+4. Print leader.
+5. Print members.
+
+STARTING SHAPE:
+
+const showParty = (leader, ...members) => {
+  ...
+};
+
+==================================================
+*/
+
+// Write your code below
+
+const showParty = (leader, ...members) => {
+  console.log(`Leader: ${leader}`);
+  console.log(members);
+};
+showParty("Clint", "Arthur", "Ellie", "Geralt");

@@ -1,366 +1,407 @@
-# Lesson 10 Notes — Arrow Functions and Chaining
+# Lesson 11 Notes — Destructuring, Spread, and Rest
 
-## Arrow Function Cheat Sheet
+## Array Destructuring
 
-Traditional function:
-
-```js
-function add(a, b) {
-  return a + b;
-}
-```
-
-Function expression:
+Pull values out of an array:
 
 ```js
-const add = function (a, b) {
-  return a + b;
-};
+const [first, second] = array;
 ```
 
-Arrow function:
+Instead of:
 
 ```js
-const add = (a, b) => {
-  return a + b;
-};
-```
-
-Short arrow function:
-
-```js
-const add = (a, b) => a + b;
-```
-
----
-
-# Short Return Rule
-
-This:
-
-```js
-(number) => {
-  return number * 2;
-};
-```
-
-can become:
-
-```js
-(number) => number * 2;
-```
-
-when there is only one returned expression.
-
----
-
-# Braces Mean You Need `return`
-
-Correct:
-
-```js
-(number) => {
-  return number * 2;
-};
-```
-
-Incorrect:
-
-```js
-(number) => {
-  number * 2;
-};
-```
-
-The incorrect version returns:
-
-```text
-undefined
-```
-
-Short version:
-
-```js
-(number) => number * 2;
-```
-
----
-
-# `.map()`
-
-Use `.map()` when you want to **transform every item**.
-
-```js
-const doubled = numbers.map((number) => number * 2);
-```
-
-Mental model:
-
-```text
-One item in → One changed item out
-```
-
----
-
-# `.filter()`
-
-Use `.filter()` when you want to **keep only certain items**.
-
-```js
-const passingScores = scores.filter((score) => score >= 60);
-```
-
-Mental model:
-
-```text
-true  → keep it
-false → remove it
-```
-
----
-
-# `.reduce()`
-
-Use `.reduce()` when you want **one final value**.
-
-```js
-const total = numbers.reduce((accumulator, number) => accumulator + number, 0);
-```
-
-The accumulator remembers the result so far.
-
----
-
-# `.reduce()` Initial Value
-
-Prefer:
-
-```js
-.reduce((accumulator, value) => accumulator + value, 0);
-```
-
-The `0`:
-
-- Gives the accumulator a clear starting value
-- Handles empty arrays safely
-- Makes the code easier to understand
-
----
-
-# Method Chaining
-
-```js
-const result = array.filter((item) => condition).map((item) => transformation);
-```
-
-Each method works on the result of the previous method.
-
----
-
-# Full Chain Pattern
-
-```js
-const result = array
-  .filter((item) => condition)
-  .map((item) => transformation)
-  .reduce((accumulator, item) => accumulator + item, 0);
+const first = array[0];
+const second = array[1];
 ```
 
 Remember:
 
 ```text
-Filter → Keep
-Map    → Change
-Reduce → Combine
+Arrays match by POSITION.
 ```
 
 ---
 
-# Arrays of Objects
+## Skip an Array Value
+
+Leave an empty position between commas:
 
 ```js
-const players = [
-  { name: "Arthur", level: 25 },
-  { name: "Ellie", level: 18 },
-];
+const [first, , third] = array;
 ```
 
-Inside the callback:
-
-```js
-(player) => player.level;
-```
-
-gets the level.
-
-```js
-(player) => player.name;
-```
-
-gets the name.
+This skips the second value.
 
 ---
 
-# Filter Objects
+## Object Destructuring
+
+Pull properties out of an object:
 
 ```js
-const highLevelPlayers = players.filter((player) => player.level >= 18);
+const { name, level } = player;
+```
+
+Instead of:
+
+```js
+const name = player.name;
+const level = player.level;
+```
+
+Remember:
+
+```text
+Objects match by PROPERTY NAME.
 ```
 
 ---
 
-# Map Objects
+## Array vs Object Destructuring
+
+Array:
 
 ```js
-const playerNames = players.map((player) => player.name);
+const [first, second] = array;
+```
+
+Object:
+
+```js
+const { name, level } = object;
+```
+
+Quick reminder:
+
+```text
+[] → array destructuring
+
+{} → object destructuring
+```
+
+---
+
+## Rename Object Properties
+
+Pattern:
+
+```js
+const { propertyName: newVariableName } = object;
+```
+
+Example:
+
+```js
+const { name: enemyName, health: enemyHealth } = enemy;
+```
+
+This means:
+
+```text
+name   → enemyName
+health → enemyHealth
+```
+
+---
+
+# Spread
+
+Spread uses:
+
+```js
+...
+```
+
+Think:
+
+```text
+SPREAD = unpack
+```
+
+Spread takes existing values and places them somewhere new.
+
+---
+
+## Copy an Array
+
+```js
+const copiedArray = [...originalArray];
+```
+
+---
+
+## Add to an Array Without `.push()`
+
+```js
+const expandedArray = [...originalArray, newItem];
+```
+
+Example:
+
+```js
+const expandedParty = [...originalParty, "Geralt"];
+```
+
+---
+
+## Combine Arrays
+
+```js
+const combined = [...arrayOne, ...arrayTwo];
+```
+
+Example:
+
+```js
+const allWeapons = [...meleeWeapons, ...rangedWeapons];
+```
+
+---
+
+## Copy an Object
+
+```js
+const copiedObject = {
+  ...originalObject,
+};
+```
+
+---
+
+## Change a Property While Copying
+
+```js
+const updatedPlayer = {
+  ...player,
+  health: 65,
+};
+```
+
+The original object is not changed.
+
+---
+
+## Add a Property While Copying
+
+```js
+const armedPlayer = {
+  ...player,
+  weapon: "Sword",
+};
+```
+
+---
+
+## Object Spread Order Matters
+
+Later properties overwrite earlier properties.
+
+```js
+const updated = {
+  ...player,
+  health: 50,
+};
+```
+
+The new `health` wins.
+
+Remember:
+
+```text
+Later property = winner
+```
+
+---
+
+# Rest
+
+Rest also uses:
+
+```js
+...
+```
+
+Think:
+
+```text
+REST = collect
+```
+
+Rest collects multiple values into an array.
+
+---
+
+## Rest Parameter
+
+```js
+const functionName = (...values) => {
+  console.log(values);
+};
+```
+
+Call:
+
+```js
+functionName(10, 20, 30);
+```
+
+Then:
+
+```js
+values;
+// [10, 20, 30]
+```
+
+---
+
+## Rest with `.reduce()`
+
+```js
+const totalDamage = (...damageValues) => {
+  return damageValues.reduce((total, damage) => total + damage, 0);
+};
+```
+
+This function can accept any number of arguments.
+
+---
+
+## Normal Parameter + Rest
+
+```js
+const showParty = (leader, ...members) => {
+  console.log(leader);
+  console.log(members);
+};
+```
+
+Call:
+
+```js
+showParty("Clint", "Arthur", "Ellie", "Geralt");
 ```
 
 Result:
 
 ```js
-["Arthur", "Ellie"];
+leader;
+// "Clint"
+
+members;
+// ["Arthur", "Ellie", "Geralt"]
 ```
 
 ---
 
-# Filter Then Map
+## Rest with Array Destructuring
 
 ```js
-const highLevelPlayers = players
-  .filter((player) => player.level >= 18)
-  .map((player) => player.name);
+const [firstItem, ...remainingItems] = inventory;
 ```
 
-Read it as:
+Example:
+
+```js
+const inventory = ["Sword", "Bow", "Potion", "Shield"];
+
+const [primaryItem, ...remainingItems] = inventory;
+```
+
+Result:
+
+```js
+primaryItem;
+// "Sword"
+
+remainingItems;
+// ["Bow", "Potion", "Shield"]
+```
+
+Think:
 
 ```text
-Keep high-level players.
-Then take their names.
+Take the first item.
+
+Collect the REST.
 ```
 
 ---
 
-# Filter → Map → Reduce
-
-```js
-const totalPower = players
-  .filter((player) => player.level >= 15)
-  .map((player) => player.power)
-  .reduce((accumulator, power) => accumulator + power, 0);
-```
-
-Read it as:
-
-```text
-Keep players level 15 or higher.
-
-Take their power values.
-
-Add all the power values together.
-```
-
----
-
-# Common Mistakes
-
-## Forgetting `return`
-
-Incorrect:
-
-```js
-numbers.map((number) => {
-  number * 2;
-});
-```
+## Rest Must Be Last
 
 Correct:
 
 ```js
-numbers.map((number) => {
-  return number * 2;
-});
+const showParty = (leader, ...members) => {};
 ```
 
-Or:
+Incorrect:
 
 ```js
-numbers.map((number) => number * 2);
+const showParty = (...members, leader) => {
+};
+```
+
+The rest parameter must always be the final parameter.
+
+---
+
+# Spread vs Rest
+
+They use the same syntax:
+
+```js
+...
+```
+
+But they do different jobs.
+
+Spread:
+
+```js
+const copied = [...original];
+```
+
+means:
+
+```text
+Unpack the values.
+```
+
+Rest:
+
+```js
+const [first, ...others] = array;
+```
+
+means:
+
+```text
+Collect the remaining values.
+```
+
+Remember:
+
+```text
+SPREAD = UNPACK
+
+REST = COLLECT
 ```
 
 ---
 
-## Forgetting `.reduce()`'s Initial Value
+# Quick Mental Model
 
-Less ideal:
+```text
+DESTRUCTURING
+Pull specific values out.
 
-```js
-numbers.reduce((accumulator, number) => accumulator + number);
-```
+SPREAD
+Unpack existing values into something new.
 
-Preferred:
-
-```js
-numbers.reduce((accumulator, number) => accumulator + number, 0);
-```
-
----
-
-## Mixing Up `.map()` and `.filter()`
-
-Use:
-
-```js
-.filter()
-```
-
-when you want **fewer items**.
-
-Use:
-
-```js
-.map()
-```
-
-when you want **changed items**.
-
----
-
-# Method Selection Cheat Sheet
-
-### Do something with every item
-
-```js
-.forEach()
-```
-
-### Transform every item
-
-```js
-.map()
-```
-
-### Keep only some items
-
-```js
-.filter()
-```
-
-### Find the first match
-
-```js
-.find()
-```
-
-### Check whether an exact value exists
-
-```js
-.includes()
-```
-
-### Produce one final value
-
-```js
-.reduce()
+REST
+Collect remaining values together.
 ```
 
 ---
@@ -368,59 +409,182 @@ when you want **changed items**.
 # Quick Reference
 
 ```js
-// Arrow function
-const multiply = (a, b) => a * b;
+// ARRAY DESTRUCTURING
+const [first, second] = array;
 
-// Map
-const doubled = numbers.map((number) => number * 2);
+// SKIP AN ARRAY VALUE
+const [first, , third] = array;
 
-// Filter
-const passing = scores.filter((score) => score >= 60);
+// OBJECT DESTRUCTURING
+const { name, level } = player;
 
-// Reduce
-const total = numbers.reduce((accumulator, number) => accumulator + number, 0);
+// RENAME OBJECT PROPERTIES
+const { name: playerName, level: playerLevel } = player;
 
-// Chain
-const result = numbers
-  .filter((number) => number >= 10)
-  .map((number) => number * 2)
-  .reduce((total, number) => total + number, 0);
+// COPY ARRAY
+const copiedArray = [...array];
 
-// Objects
-const names = players
-  .filter((player) => player.level >= 18)
-  .map((player) => player.name);
+// ADD TO ARRAY
+const expandedArray = [...array, newItem];
+
+// COMBINE ARRAYS
+const combinedArray = [...arrayOne, ...arrayTwo];
+
+// COPY OBJECT
+const copiedObject = {
+  ...object,
+};
+
+// CHANGE OBJECT PROPERTY
+const updatedObject = {
+  ...object,
+  health: 50,
+};
+
+// ADD OBJECT PROPERTY
+const armedPlayer = {
+  ...player,
+  weapon: "Sword",
+};
+
+// REST PARAMETER
+const functionName = (...values) => {};
+
+// NORMAL PARAMETER + REST
+const showParty = (leader, ...members) => {};
+
+// REST WITH DESTRUCTURING
+const [firstItem, ...remainingItems] = inventory;
 ```
+
+---
+
+# Common Mistakes
+
+## Wrong Brackets
+
+Array:
+
+```js
+const [first, second] = array;
+```
+
+Object:
+
+```js
+const { name, level } = object;
+```
+
+---
+
+## Forgetting Array Position Matters
+
+```js
+const [first, second] = array;
+```
+
+`first` gets index `0`.
+
+`second` gets index `1`.
+
+---
+
+## Forgetting Object Property Names Matter
+
+```js
+const { name } = player;
+```
+
+JavaScript searches for the property named:
+
+```js
+name;
+```
+
+---
+
+## Forgetting Property Order with Spread
+
+```js
+const updated = {
+  ...player,
+  health: 50,
+};
+```
+
+Later values overwrite earlier values.
+
+---
+
+## Putting a Parameter After Rest
+
+Wrong:
+
+```js
+const example = (...items, lastItem) => {
+};
+```
+
+Correct:
+
+```js
+const example = (firstItem, ...items) => {};
+```
+
+---
+
+## Confusing Spread and Rest
+
+Spread:
+
+```js
+const copy = [...original];
+```
+
+Rest:
+
+```js
+const [first, ...rest] = original;
+```
+
+Remember:
+
+```text
+Spread → unpack
+
+Rest → collect
+```
+
+---
+
+# Important Rules to Remember
+
+1. Array destructuring matches by position.
+2. Object destructuring matches by property name.
+3. `...` can mean spread or rest depending on how it is being used.
+4. Spread unpacks values.
+5. Rest collects values.
+6. Rest creates an array.
+7. Rest parameters must come last.
+8. Later object properties overwrite earlier properties.
+9. Spread is useful for creating new arrays and objects without changing the originals.
+10. Destructuring makes it easier to pull values out of arrays and objects.
 
 ---
 
 # Completed Skills
 
-- [x] I can write an arrow function.
-- [x] I understand function expressions.
-- [x] I can use short-return syntax.
-- [x] I can use arrow functions with `.map()`.
-- [x] I can use arrow functions with `.filter()`.
-- [x] I can use arrow functions with `.reduce()`.
-- [x] I can chain array methods.
-- [x] I can filter arrays of objects.
-- [x] I can map object properties.
-- [x] I can build `filter → map → reduce` pipelines.
-- [x] I understand why `.reduce()` should usually have an initial value.
-
----
-
-# Next Lesson
-
-**Lesson 11 — Destructuring, Spread, and Rest**
-
-Topics:
-
-- Array destructuring
-- Object destructuring
-- Spread operator `...`
-- Copying arrays
-- Combining arrays
-- Copying objects
-- Updating objects without changing the original
-- Rest parameters
+- [x] Array destructuring
+- [x] Skipping array values
+- [x] Object destructuring
+- [x] Renaming destructured properties
+- [x] Array spread
+- [x] Combining arrays
+- [x] Object spread
+- [x] Updating copied objects
+- [x] Adding object properties
+- [x] Rest parameters
+- [x] Rest with `.reduce()`
+- [x] Rest with destructuring
+- [x] Normal parameters with rest
+- [x] Spread vs rest

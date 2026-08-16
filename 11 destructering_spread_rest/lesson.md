@@ -1,438 +1,841 @@
-# Lesson 10 — Arrow Functions and Array Method Chaining
+# Lesson 11 — Destructuring, Spread, and Rest
 
 ## Lesson Goal
 
-In this lesson, you learned modern JavaScript function syntax and how to combine array methods into clean data-processing chains.
+In this lesson, you learned three modern JavaScript features:
 
-You learned:
+- Destructuring
+- Spread `...`
+- Rest `...`
 
-- Arrow functions
-- Function expressions
-- Short-return arrow functions
-- Arrow functions with `.map()`
-- Arrow functions with `.filter()`
-- Arrow functions with `.reduce()`
-- Method chaining
-- Working with arrays of objects
-- Extracting object properties with `.map()`
-- Building complete `filter → map → reduce` pipelines
+Even though spread and rest both use `...`, they do different jobs depending on where they are used.
 
 ---
 
-# 1. Function Declarations
+# 1. Array Destructuring
 
-A traditional function declaration looks like this:
-
-```js
-function multiply(num1, num2) {
-  return num1 * num2;
-}
-```
-
-Call it with:
+Normally, you can access array values using indexes:
 
 ```js
-multiply(5, 5);
+const party = ["Clint", "Arthur", "Ellie"];
+
+const firstPlayer = party[0];
+const secondPlayer = party[1];
 ```
 
-Result:
+With array destructuring:
+
+```js
+const [firstPlayer, secondPlayer] = party;
+```
+
+Now:
+
+```js
+console.log(firstPlayer);
+// Clint
+
+console.log(secondPlayer);
+// Arthur
+```
+
+The values are matched by position:
 
 ```text
-25
+["Clint", "Arthur", "Ellie"]
+    ↓         ↓
+ first     second
+```
+
+With arrays, the position of the variables matters.
+
+---
+
+# 2. Skipping Array Values
+
+You can skip values during destructuring by leaving an empty position between commas.
+
+```js
+const party = ["Clint", "Arthur", "Ellie", "Geralt"];
+
+const [first, , third] = party;
+```
+
+Now:
+
+```js
+console.log(first);
+// Clint
+
+console.log(third);
+// Ellie
+```
+
+The second value, `"Arthur"`, was skipped.
+
+The pattern is:
+
+```js
+const [first, , third] = array;
 ```
 
 ---
 
-# 2. Function Expressions
+# 3. Object Destructuring
 
-A function can also be stored inside a variable:
+Objects can also be destructured.
+
+Normally:
 
 ```js
-const multiply = function (num1, num2) {
-  return num1 * num2;
+const character = {
+  name: "Geralt",
+  level: 30,
+  weapon: "Silver Sword",
 };
+
+const name = character.name;
+const level = character.level;
+const weapon = character.weapon;
 ```
 
-Call it normally:
+With object destructuring:
 
 ```js
-multiply(5, 5);
+const { name, level, weapon } = character;
 ```
+
+Now:
+
+```js
+console.log(name);
+// Geralt
+
+console.log(level);
+// 30
+
+console.log(weapon);
+// Silver Sword
+```
+
+Unlike arrays, object destructuring matches values using the property names.
 
 ---
 
-# 3. Arrow Functions
+# 4. Array vs Object Destructuring
 
-Arrow functions are another way to write function expressions.
-
-```js
-const multiply = (num1, num2) => {
-  return num1 * num2;
-};
-```
-
-The arrow is:
+Arrays use square brackets:
 
 ```js
-=>
+const [first, second] = array;
 ```
 
----
-
-# 4. Short-Return Arrow Functions
-
-When an arrow function only returns one expression, the braces and `return` can be removed.
-
-Long version:
+Objects use curly braces:
 
 ```js
-const multiply = (num1, num2) => {
-  return num1 * num2;
-};
+const { name, level } = object;
 ```
 
-Short version:
-
-```js
-const multiply = (num1, num2) => num1 * num2;
-```
-
-Both do the same thing.
-
----
-
-# 5. Arrow Functions with `.map()`
-
-Older syntax:
-
-```js
-const squaredNumbers = numbers.map(function (number) {
-  return number * number;
-});
-```
-
-Arrow function:
-
-```js
-const squaredNumbers = numbers.map((number) => {
-  return number * number;
-});
-```
-
-Short arrow function:
-
-```js
-const squaredNumbers = numbers.map((number) => number * number);
-```
-
----
-
-# 6. Arrow Functions with `.filter()`
-
-```js
-const scores = [45, 82, 67, 91, 38, 75];
-
-const passingScores = scores.filter((score) => score >= 60);
-```
-
-Result:
-
-```js
-[82, 67, 91, 75];
-```
-
-The callback returns a boolean.
-
-If the result is `true`, the value is kept.
-
----
-
-# 7. Method Chaining
-
-Array methods can be connected together.
-
-```js
-const poweredLevels = levels
-  .filter((level) => level >= 15)
-  .map((level) => level * 2);
-```
-
-Each method receives the result of the previous method.
+The important difference is:
 
 ```text
-Original array
-      ↓
-   filter
-      ↓
-Filtered array
-      ↓
-     map
-      ↓
-Final array
+Arrays  → position matters
+
+Objects → property names matter
 ```
 
 ---
 
-# 8. Filter Then Map
+# 5. Renaming Object Properties
 
-```js
-const levels = [5, 10, 15, 20, 25, 30];
-
-const poweredLevels = levels
-  .filter((level) => level >= 15)
-  .map((level) => level * 2);
-```
-
-Original:
-
-```text
-[5, 10, 15, 20, 25, 30]
-```
-
-After `.filter()`:
-
-```text
-[15, 20, 25, 30]
-```
-
-After `.map()`:
-
-```text
-[30, 40, 50, 60]
-```
-
----
-
-# 9. Filter → Map → Reduce
-
-A common JavaScript pipeline is:
-
-```js
-array
-  .filter(...)
-  .map(...)
-  .reduce(...);
-```
+Sometimes you do not want the new variable to have the same name as the object property.
 
 Example:
 
 ```js
-const scores = [40, 75, 90, 55, 100, 65];
-
-const totalScore = scores
-  .filter((score) => score >= 60)
-  .map((score) => score + 10)
-  .reduce((accumulator, score) => accumulator + score, 0);
+const enemy = {
+  name: "Dragon",
+  health: 250,
+  power: 90,
+};
 ```
 
-Flow:
+You can rename properties while destructuring:
+
+```js
+const { name: enemyName, health: enemyHealth } = enemy;
+```
+
+Now:
+
+```js
+console.log(enemyName);
+// Dragon
+
+console.log(enemyHealth);
+// 250
+```
+
+The pattern is:
+
+```js
+propertyName: newVariableName;
+```
+
+So:
+
+```js
+name: enemyName;
+```
+
+means:
 
 ```text
-[40, 75, 90, 55, 100, 65]
-
-        ↓ filter >= 60
-
-[75, 90, 100, 65]
-
-        ↓ map + 10
-
-[85, 100, 110, 75]
-
-        ↓ reduce
-
-370
+Take the "name" property
+and store it in a variable called "enemyName".
 ```
 
 ---
 
-# 10. Arrays of Objects
+# 6. The Spread Operator
 
-Array methods also work with objects.
+The spread operator uses three dots:
 
 ```js
-const players = [
-  { name: "Clint", level: 10 },
-  { name: "Arthur", level: 25 },
-  { name: "Ellie", level: 18 },
-];
+...
 ```
 
-The current item passed into the callback is now an object:
+Spread takes values from an existing array or object and places them into something new.
+
+A simple array example:
 
 ```js
-players.filter((player) => player.level >= 18);
+const originalParty = ["Clint", "Arthur", "Ellie"];
+
+const expandedParty = [...originalParty, "Geralt"];
+```
+
+The new array becomes:
+
+```js
+["Clint", "Arthur", "Ellie", "Geralt"];
+```
+
+The original array remains unchanged.
+
+---
+
+# 7. Copying Arrays with Spread
+
+You can create a new copy of an array:
+
+```js
+const original = ["Sword", "Bow", "Potion"];
+
+const copy = [...original];
+```
+
+Now `copy` contains the same values:
+
+```js
+["Sword", "Bow", "Potion"];
+```
+
+But it is a new array.
+
+---
+
+# 8. Combining Arrays with Spread
+
+Spread can combine multiple arrays.
+
+```js
+const meleeWeapons = ["Sword", "Axe"];
+const rangedWeapons = ["Bow", "Crossbow"];
+
+const allWeapons = [...meleeWeapons, ...rangedWeapons];
+```
+
+Result:
+
+```js
+["Sword", "Axe", "Bow", "Crossbow"];
+```
+
+You can think of:
+
+```js
+...meleeWeapons
+```
+
+as saying:
+
+```text
+Take every value from meleeWeapons
+and place it here.
 ```
 
 ---
 
-# 11. Filtering Objects
+# 9. Spread with Objects
+
+Spread also works with objects.
 
 ```js
-const highLevelPlayers = players.filter((player) => player.level >= 18);
+const player = {
+  name: "Geralt",
+  level: 30,
+  health: 100,
+};
 ```
 
-This means:
+You can copy it:
 
-```text
-Keep the player when their level is 18 or higher.
+```js
+const copiedPlayer = {
+  ...player,
+};
+```
+
+You can also change a property while making the copy:
+
+```js
+const damagedPlayer = {
+  ...player,
+  health: 65,
+};
+```
+
+The new object becomes:
+
+```js
+{
+  name: "Geralt",
+  level: 30,
+  health: 65
+}
+```
+
+The original object still has:
+
+```js
+health: 100;
 ```
 
 ---
 
-# 12. Mapping Objects to Properties
+# 10. Property Order Matters with Object Spread
 
-`.map()` can transform whole objects into one property.
+When spreading objects, later properties overwrite earlier properties.
+
+Example:
 
 ```js
-const names = players.map((player) => player.name);
+const damagedPlayer = {
+  ...player,
+  health: 65,
+};
 ```
 
-Instead of:
+JavaScript first copies:
 
 ```js
-[
-  { name: "Clint", level: 10 },
-  { name: "Arthur", level: 25 },
-];
+{
+  name: "Geralt",
+  level: 30,
+  health: 100
+}
 ```
 
-you get:
+Then:
 
 ```js
-["Clint", "Arthur"];
+health: 65;
+```
+
+overwrites the copied health value.
+
+The result is:
+
+```js
+{
+  name: "Geralt",
+  level: 30,
+  health: 65
+}
+```
+
+If you reversed the order:
+
+```js
+const damagedPlayer = {
+  health: 65,
+  ...player,
+};
+```
+
+then the `health` value from `player` would overwrite `65`.
+
+So remember:
+
+```text
+Later properties win.
 ```
 
 ---
 
-# 13. Filter and Map Objects
+# 11. Adding New Properties with Spread
+
+You can also copy an object and add a brand-new property.
 
 ```js
-const highLevelPlayers = players
-  .filter((player) => player.level >= 18)
-  .map((player) => player.name);
+const character = {
+  name: "Arthur",
+  level: 25,
+};
 ```
 
-Flow:
+Create a new object:
+
+```js
+const armedCharacter = {
+  ...character,
+  weapon: "Revolver",
+};
+```
+
+Result:
+
+```js
+{
+  name: "Arthur",
+  level: 25,
+  weapon: "Revolver"
+}
+```
+
+The original `character` object remains unchanged.
+
+---
+
+# 12. Rest Parameters
+
+Rest also uses:
+
+```js
+...
+```
+
+But rest does the opposite kind of job from spread.
+
+Instead of spreading values out, rest collects values together.
+
+Example:
+
+```js
+const totalDamage = (...damageValues) => {
+  console.log(damageValues);
+};
+```
+
+Call:
+
+```js
+totalDamage(10, 20, 15, 5);
+```
+
+Inside the function:
+
+```js
+damageValues;
+```
+
+becomes:
+
+```js
+[10, 20, 15, 5];
+```
+
+Rest collected all four arguments into one array.
+
+---
+
+# 13. Rest Parameters with `.reduce()`
+
+Because a rest parameter creates an array, you can use array methods on it.
+
+```js
+const totalDamage = (...damageValues) => {
+  return damageValues.reduce((accumulator, damage) => accumulator + damage, 0);
+};
+```
+
+Call:
+
+```js
+const result = totalDamage(10, 20, 15, 5);
+
+console.log(result);
+```
+
+Output:
 
 ```text
-Player objects
-      ↓
-Keep level >= 18
-      ↓
-Matching player objects
-      ↓
-Extract .name
-      ↓
-Array of names
+50
+```
+
+The function can accept any number of damage values.
+
+---
+
+# 14. Why Rest Parameters Are Useful
+
+Without rest, you would have to decide how many parameters your function accepts:
+
+```js
+const totalDamage = (damage1, damage2, damage3, damage4) => {
+  return damage1 + damage2 + damage3 + damage4;
+};
+```
+
+That is limited to four values.
+
+With rest:
+
+```js
+const totalDamage = (...damageValues) => {
+  return damageValues.reduce((total, damage) => total + damage, 0);
+};
+```
+
+You can call:
+
+```js
+totalDamage(10, 20);
+```
+
+or:
+
+```js
+totalDamage(10, 20, 30, 40);
+```
+
+or:
+
+```js
+totalDamage(10, 20, 30, 40, 50, 60, 70);
+```
+
+The rest parameter collects however many arguments are provided.
+
+---
+
+# 15. Rest with Array Destructuring
+
+Rest can also be used while destructuring an array.
+
+```js
+const inventory = ["Sword", "Bow", "Potion", "Shield", "Torch"];
+```
+
+Then:
+
+```js
+const [primaryItem, ...remainingItems] = inventory;
+```
+
+JavaScript takes the first value:
+
+```js
+primaryItem;
+// "Sword"
+```
+
+Then:
+
+```js
+...remainingItems
+```
+
+collects everything that is left:
+
+```js
+remainingItems;
+// ["Bow", "Potion", "Shield", "Torch"]
+```
+
+You can picture it like this:
+
+```text
+["Sword", "Bow", "Potion", "Shield", "Torch"]
+    ↓                ↓
+primaryItem     remainingItems
+
+"Sword"         ["Bow", "Potion", "Shield", "Torch"]
+```
+
+The important pattern is:
+
+```js
+const [firstItem, ...theRest] = array;
 ```
 
 ---
 
-# 14. Complete Object Pipeline
+# 16. Normal Parameters with Rest Parameters
+
+A function can have normal parameters followed by a rest parameter.
 
 ```js
-const partyMembers = [
-  { name: "Clint", level: 10, power: 40 },
-  { name: "Arthur", level: 25, power: 80 },
-  { name: "Ellie", level: 18, power: 65 },
-  { name: "Geralt", level: 30, power: 100 },
-  { name: "Joel", level: 12, power: 55 },
-];
-
-const totalPartyPower = partyMembers
-  .filter((player) => player.level >= 15)
-  .map((player) => player.power)
-  .reduce((accumulator, power) => accumulator + power, 0);
+const showParty = (leader, ...members) => {
+  console.log(`Leader: ${leader}`);
+  console.log(members);
+};
 ```
 
-First, `.filter()` keeps:
-
-```text
-Arthur
-Ellie
-Geralt
-```
-
-Then `.map()` extracts:
+Call:
 
 ```js
-[80, 65, 100];
+showParty("Clint", "Arthur", "Ellie", "Geralt");
 ```
 
-Then `.reduce()` calculates:
+The first argument goes into:
 
-```text
-245
+```js
+leader;
+```
+
+So:
+
+```js
+leader;
+// "Clint"
+```
+
+Everything remaining goes into:
+
+```js
+members;
+```
+
+So:
+
+```js
+members;
+// ["Arthur", "Ellie", "Geralt"]
+```
+
+The pattern is:
+
+```js
+const functionName = (firstValue, ...remainingValues) => {};
 ```
 
 ---
 
-# 15. Why `.reduce()` Starts at Zero
+# 17. Rest Must Be Last
+
+A rest parameter must always be the final parameter.
+
+Correct:
 
 ```js
-.reduce((accumulator, power) => accumulator + power, 0);
+const showParty = (leader, ...members) => {};
 ```
 
-The final `0` is the starting accumulator.
+Incorrect:
 
-```text
-Start: 0
-
-0 + 80 = 80
-80 + 65 = 145
-145 + 100 = 245
+```js
+const showParty = (...members, leader) => {
+};
 ```
 
-It also means an empty array safely reduces to:
+JavaScript needs the rest parameter at the end because it means:
 
 ```text
-0
+Collect everything that remains.
+```
+
+There cannot be another parameter after "everything that remains."
+
+---
+
+# 18. Spread vs Rest
+
+Spread and rest use exactly the same syntax:
+
+```js
+...
+```
+
+The difference depends on what the three dots are doing.
+
+Spread:
+
+```js
+const copiedParty = [...party];
+```
+
+means:
+
+```text
+Take the values out of party
+and place them here.
+```
+
+Rest:
+
+```js
+const [leader, ...members] = party;
+```
+
+means:
+
+```text
+Take the remaining values
+and collect them into members.
+```
+
+A useful way to remember them:
+
+```text
+SPREAD = unpack
+
+REST = collect
 ```
 
 ---
 
-# 16. Reading Chains Top to Bottom
+# Final Examples
 
-When you see:
+## Array Destructuring
 
 ```js
-const result = array
-  .filter(...)
-  .map(...)
-  .reduce(...);
-```
+const weapons = ["Sword", "Bow", "Axe"];
 
-Read it like instructions:
+const [primaryWeapon, secondaryWeapon] = weapons;
 
-```text
-Take the array.
-
-Keep certain items.
-
-Transform the remaining items.
-
-Combine them into one result.
+console.log(primaryWeapon);
+console.log(secondaryWeapon);
 ```
 
 ---
 
-# Final Solution
+## Skipping Values
 
 ```js
-const partyMembers = [
-  { name: "Clint", level: 10, power: 40 },
-  { name: "Arthur", level: 25, power: 80 },
-  { name: "Ellie", level: 18, power: 65 },
-  { name: "Geralt", level: 30, power: 100 },
-  { name: "Joel", level: 12, power: 55 },
-];
+const party = ["Clint", "Arthur", "Ellie", "Geralt"];
 
-const totalPartyPower = partyMembers
-  .filter((player) => player.level >= 15)
-  .map((player) => player.power)
-  .reduce((accumulator, power) => accumulator + power, 0);
+const [first, , third] = party;
 
-console.log(`Total party power: ${totalPartyPower}`);
+console.log(first);
+console.log(third);
+```
+
+---
+
+## Object Destructuring
+
+```js
+const character = {
+  name: "Geralt",
+  level: 30,
+  weapon: "Silver Sword",
+};
+
+const { name, level, weapon } = character;
+```
+
+---
+
+## Renaming Properties
+
+```js
+const enemy = {
+  name: "Dragon",
+  health: 250,
+  power: 90,
+};
+
+const { name: enemyName, health: enemyHealth } = enemy;
+```
+
+---
+
+## Array Spread
+
+```js
+const originalParty = ["Clint", "Arthur", "Ellie"];
+
+const expandedParty = [...originalParty, "Geralt"];
+```
+
+---
+
+## Combine Arrays
+
+```js
+const meleeWeapons = ["Sword", "Axe"];
+const rangedWeapons = ["Bow", "Crossbow"];
+
+const allWeapons = [...meleeWeapons, ...rangedWeapons];
+```
+
+---
+
+## Object Spread
+
+```js
+const player = {
+  name: "Geralt",
+  level: 30,
+  health: 100,
+};
+
+const damagedPlayer = {
+  ...player,
+  health: 65,
+};
+```
+
+---
+
+## Rest Parameter
+
+```js
+const totalDamage = (...damageValues) => {
+  return damageValues.reduce((accumulator, damage) => accumulator + damage, 0);
+};
+
+const damageResult = totalDamage(10, 20, 15, 5);
+
+console.log(`Total damage: ${damageResult}`);
+```
+
+---
+
+## Rest with Destructuring
+
+```js
+const inventory = ["Sword", "Bow", "Potion", "Shield", "Torch"];
+
+const [primaryItem, ...remainingItems] = inventory;
+
+console.log(primaryItem);
+console.log(remainingItems);
+```
+
+---
+
+## Normal Parameter + Rest
+
+```js
+const showParty = (leader, ...members) => {
+  console.log(`Leader: ${leader}`);
+  console.log(members);
+};
+
+showParty("Clint", "Arthur", "Ellie", "Geralt");
 ```
 
 ---
@@ -441,12 +844,20 @@ console.log(`Total party power: ${totalPartyPower}`);
 
 You learned how to:
 
-- Write arrow functions
-- Use short returns
-- Convert regular callbacks into arrow functions
-- Use arrow functions with array methods
-- Chain array methods
-- Filter arrays of objects
-- Map objects into individual properties
-- Reduce mapped values into totals
-- Build modern JavaScript processing pipelines
+- Destructure arrays
+- Skip values during array destructuring
+- Destructure objects
+- Rename object properties while destructuring
+- Copy arrays with spread
+- Add values to copied arrays
+- Combine multiple arrays
+- Copy objects with spread
+- Override object properties
+- Add new object properties
+- Use rest parameters
+- Accept any number of function arguments
+- Use `.reduce()` with rest parameters
+- Use rest during array destructuring
+- Combine normal parameters with rest
+- Understand why rest must be the final parameter
+- Understand the difference between spread and rest
