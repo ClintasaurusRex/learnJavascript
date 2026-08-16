@@ -195,5 +195,53 @@ const enemy = { name: "Dragon", health: 250, power: 90 };
 
 const { name: enemyName, health: enemyHealth } = enemy;
 
-console.log(`Enemy": ${enemyName}`);
+console.log(`Enemy: ${enemyName}`);
 console.log(`Health: ${enemyHealth}`);
+spacer();
+/*
+==================================================
+LESSON 11 — CHALLENGE 5: SPREAD WITH ARRAYS - Creates new array without modifying the original
+==================================================
+
+Create this array:
+
+const originalParty = ["Clint", "Arthur", "Ellie"];
+
+Create a NEW array called:
+
+expandedParty
+
+Use the spread operator to copy all values from
+originalParty and add:
+
+"Geralt"
+
+to the end.
+
+EXPECTED RESULT:
+
+["Clint", "Arthur", "Ellie", "Geralt"]
+
+REQUIREMENTS:
+
+1. Use the spread operator ...
+2. Do not use .push().
+3. Do not change originalParty.
+4. Create a new array.
+5. Print both arrays.
+
+STARTING SHAPE:
+
+const expandedParty = [...originalParty, "Geralt"];
+
+==================================================
+*/
+
+// Write your code below
+
+const originalParty = ["Clint", "Arthur", "Ellie"];
+
+const expandedParty = [...originalParty, "Geralt"];
+
+console.log(originalParty);
+console.log(expandedParty);
