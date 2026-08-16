@@ -72,4 +72,47 @@ element.textContent = "New text";
 
 // Write your code below
 
-title.textContent = "The dragon has Awakened";
+title.textContent = "Sylvie is awake meow";
+console.log(title.textContent);
+/*
+==================================================
+LESSON 12 — CHALLENGE 3: ADD A CSS CLASS
+==================================================
+
+Your HTML contains:
+
+<p id="status">Dragon is sleeping</p>
+
+Use document.querySelector() to select it.
+
+Store it in:
+
+status
+
+Then add this class:
+
+awake
+
+using:
+
+.classList.add()
+
+REQUIREMENTS:
+
+1. Use document.querySelector().
+2. Store the element in const status.
+3. Use status.classList.add("awake").
+4. Print status.classList to the console.
+
+PATTERN:
+
+element.classList.add("className");
+
+==================================================
+*/
+
+// Write your code below
+
+const status = document.querySelector("#status");
+status.classList.add("awake");
+console.log(status.classList);
