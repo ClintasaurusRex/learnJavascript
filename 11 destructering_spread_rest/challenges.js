@@ -141,3 +141,59 @@ const { name, level, weapon } = character;
 console.log(`Name: ${name}`);
 console.log(`Level: ${level}`);
 console.log(`Weapon: ${weapon}`);
+spacer();
+
+/*
+==================================================
+LESSON 11 — CHALLENGE 4: RENAMING PROPERTIES
+==================================================
+
+Create this object:
+
+const enemy = {
+  name: "Dragon",
+  health: 250,
+  power: 90,
+};
+
+Use object destructuring to create:
+
+enemyName
+enemyHealth
+
+Rename:
+
+name   -> enemyName
+health -> enemyHealth
+
+Print:
+
+Enemy: Dragon
+Health: 250
+
+REQUIREMENTS:
+
+1. Use object destructuring.
+2. Rename the properties during destructuring.
+3. Do not use enemy.name.
+4. Do not use enemy.health.
+5. Do not create separate assignment statements.
+
+STARTING SHAPE:
+
+const {
+  name: enemyName,
+  health: enemyHealth
+} = enemy;
+
+==================================================
+*/
+
+// Write your code below
+
+const enemy = { name: "Dragon", health: 250, power: 90 };
+
+const { name: enemyName, health: enemyHealth } = enemy;
+
+console.log(`Enemy": ${enemyName}`);
+console.log(`Health: ${enemyHealth}`);
