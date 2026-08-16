@@ -87,3 +87,57 @@ const party = ["Clint", "Arthur", "Ellie", "Geralt"];
 const [first, , third] = party;
 console.log(`First player: ${first}`);
 console.log(`third player: ${third}`);
+spacer();
+/*
+==================================================
+LESSON 11 — CHALLENGE 3: OBJECT DESTRUCTURING
+==================================================
+
+Create this object:
+
+const character = {
+  name: "Geralt",
+  level: 30,
+  weapon: "Silver Sword",
+};
+
+Use object destructuring to create:
+
+name
+level
+weapon
+
+Print:
+
+Name: Geralt
+Level: 30
+Weapon: Silver Sword
+
+REQUIREMENTS:
+
+1. Use object destructuring.
+2. Do not use character.name.
+3. Do not use character.level.
+4. Do not use character.weapon.
+5. Use one destructuring statement.
+
+STARTING SHAPE:
+
+const { name, level, weapon } = character;
+
+==================================================
+*/
+
+// Write your code below
+
+const character = {
+  name: "Geralt",
+  level: 30,
+  weapon: "Silver Sword",
+};
+
+const { name, level, weapon } = character;
+
+console.log(`Name: ${name}`);
+console.log(`Level: ${level}`);
+console.log(`Weapon: ${weapon}`);
