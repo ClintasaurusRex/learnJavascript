@@ -393,3 +393,108 @@ const character2 = {
 
 const armedCharacter = { ...character2, weapon: "Revolver" };
 console.log(armedCharacter);
+spacer();
+/*
+==================================================
+LESSON 11 — CHALLENGE 9: REST PARAMETERS
+==================================================
+
+Create an arrow function called:
+
+totalDamage
+
+It should accept ANY number of damage values.
+
+Use a rest parameter called:
+
+damageValues
+
+Inside the function, use .reduce() to add all
+damage values together.
+
+Call:
+
+totalDamage(10, 20, 15, 5)
+
+Store the result in:
+
+damageResult
+
+Print:
+
+Total damage: 50
+
+REQUIREMENTS:
+
+1. Use an arrow function.
+2. Use a rest parameter.
+3. Use .reduce().
+4. Give .reduce() an initial value of 0.
+5. The function must work with any number of arguments.
+
+
+
+==================================================
+*/
+
+const totalDamage = (...damageValues) => {
+  return damageValues.reduce((acc, damage) => acc + damage, 0);
+};
+
+const damageResult = totalDamage(10, 20, 15, 5);
+
+console.log(`Total damage: ${damageResult}`);
+spacer();
+/*
+==================================================
+LESSON 11 — CHALLENGE 10: REST + DESTRUCTURING
+==================================================
+
+Create this array:
+
+const inventory = [
+  "Sword",
+  "Bow",
+  "Potion",
+  "Shield",
+  "Torch"
+];
+
+Use array destructuring to create:
+
+primaryItem
+
+and:
+
+remainingItems
+
+primaryItem should contain:
+
+"Sword"
+
+remainingItems should contain:
+
+["Bow", "Potion", "Shield", "Torch"]
+
+REQUIREMENTS:
+
+1. Use array destructuring.
+2. Use the rest operator ...
+3. Do not use .slice().
+4. Do not use array indexes.
+5. Print primaryItem.
+6. Print remainingItems.
+
+STARTING SHAPE:
+
+const [primaryItem, ...remainingItems] = inventory;
+
+==================================================
+*/
+
+// Write your code below
+const inventory = ["Sword", "Bow", "Potion", "Shield", "Torch"];
+
+const [primaryItem, ...remainingItems] = inventory;
+console.log(primaryItem);
+console.log(remainingItems);
