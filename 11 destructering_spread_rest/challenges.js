@@ -284,3 +284,59 @@ const rangedWeapons = ["Bow", "Crossbow"];
 
 const allWeapons = [...meleeWeapons, ...rangedWeapons];
 console.log(allWeapons);
+spacer();
+/*
+==================================================
+LESSON 11 — CHALLENGE 7: SPREAD WITH OBJECTS
+==================================================
+
+Create this object:
+
+const player = {
+  name: "Geralt",
+  level: 30,
+  health: 100,
+};
+
+Create a NEW object called:
+
+damagedPlayer
+
+Use the spread operator to copy player,
+then change:
+
+health
+
+to:
+
+65
+
+EXPECTED RESULT:
+
+{
+  name: "Geralt",
+  level: 30,
+  health: 65
+}
+
+REQUIREMENTS:
+
+1. Use the spread operator.
+2. Do not change the original player object.
+3. Create a new object.
+4. Override only the health property.
+5. Print both player and damagedPlayer.
+
+==================================================
+*/
+
+// Write your code below
+
+const player = {
+  name: "Geralt",
+  level: 30,
+  health: 100,
+};
+
+const damagedPlayer = { ...player, health: 65 };
+console.log(damagedPlayer);
