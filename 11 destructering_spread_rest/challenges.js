@@ -340,3 +340,56 @@ const player = {
 
 const damagedPlayer = { ...player, health: 65 };
 console.log(damagedPlayer);
+spacer();
+/*
+==================================================
+LESSON 11 — CHALLENGE 8: ADDING OBJECT PROPERTIES
+==================================================
+
+Create:
+
+const character = {
+  name: "Arthur",
+  level: 25,
+};
+
+Create a NEW object called:
+
+armedCharacter
+
+Use the spread operator to copy character,
+then add:
+
+weapon: "Revolver"
+
+EXPECTED RESULT:
+
+{
+  name: "Arthur",
+  level: 25,
+  weapon: "Revolver"
+}
+
+REQUIREMENTS:
+
+1. Use the spread operator ...
+2. Do not change character.
+3. Create a new object.
+4. Add the weapon property.
+5. Print armedCharacter.
+
+STARTING SHAPE:
+
+
+
+==================================================
+*/
+
+// Write your code below
+const character2 = {
+  name: "Arthur",
+  level: 25,
+};
+
+const armedCharacter = { ...character2, weapon: "Revolver" };
+console.log(armedCharacter);
