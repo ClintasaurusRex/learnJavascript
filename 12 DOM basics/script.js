@@ -116,3 +116,18 @@ element.classList.add("className");
 const status = document.querySelector("#status");
 status.classList.add("awake");
 console.log(status.classList);
+status.classList.remove("awake");
+console.log(status.classList);
+status.classList.toggle("awake");
+console.log(status.classList);
+status.classList.toggle("awake");
+console.log(status.classList);
+
+// Add event Listener
+const wakeButton = document.querySelector("#wakeButton");
+wakeButton.addEventListener("click", () => {
+  status.classList.add("awake");
+  status.textContent = "Dragon is awake";
+});
+
+// Click to make changes to the page
