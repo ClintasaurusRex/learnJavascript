@@ -245,3 +245,42 @@ const expandedParty = [...originalParty, "Geralt"];
 
 console.log(originalParty);
 console.log(expandedParty);
+spacer();
+/*
+==================================================
+LESSON 11 — CHALLENGE 6: COMBINE ARRAYS
+==================================================
+
+Create these arrays:
+
+const meleeWeapons = ["Sword", "Axe"];
+const rangedWeapons = ["Bow", "Crossbow"];
+
+Create a NEW array called:
+
+allWeapons
+
+Use the spread operator to combine both arrays.
+
+EXPECTED RESULT:
+
+["Sword", "Axe", "Bow", "Crossbow"]
+
+REQUIREMENTS:
+
+1. Use the spread operator.
+2. Do not use .push().
+3. Do not use .concat().
+4. Do not change either original array.
+5. Print allWeapons.
+
+==================================================
+*/
+
+// Write your code below
+
+const meleeWeapons = ["Sword", "Axe"];
+const rangedWeapons = ["Bow", "Crossbow"];
+
+const allWeapons = [...meleeWeapons, ...rangedWeapons];
+console.log(allWeapons);
